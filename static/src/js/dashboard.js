@@ -109,20 +109,6 @@ setup(){
         }
 
 
-
-    /** 
-    this.state = useState({
-        titulo: "resumen de ingresos",
-        ingresos: [
-
-            { id: 1, concepto: "Venta de Software", monto: 1500.50, fecha: "2023-10-01" },
-            { id: 2, concepto: "Consultoría Odoo", monto: 800.00, fecha: "2023-10-05" },
-            { id: 3, concepto: "Mantenimiento Servidor", monto: 300.25, fecha: "2023-10-10" },
-
-        ], egresos: [], 
-    });
-**/
-
 get _totalIngresos() {
     return this.state.ingresos.reduce((acc, reg) => acc + reg.credit, 0);
 }
