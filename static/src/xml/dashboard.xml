@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ingresos_egresos_add.Dashboard">
+    <div class="p-4 overflow-auto" style="height: 100vh;">
+
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3 bg-info text-white">
+                        <h5>
+                            Total de ingresos: $
+                            <t t-esc="totalIngresos"/>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+    <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3 bg-info text-white">
+                        <h5>
+                            Total de gastos : $
+                            <t t-esc="totalEgresos"/>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+            
+    <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3 bg-info text-white">
+                        <h5>
+                            Balance neto : $
+                            <t t-esc="balance"/>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+    <button class="btn btn-info me-2" t-on-click="ToggleIngresos">
+        <t t-if="!state.mostrarIngresos">Ver ingresos</t>
+        <t t-if="state.mostrarIngresos">Ocultar ingresos</t>
+    </button>
+
+    <div t-if="state.mostrarIngresos" class="mt-3 p-3 border bg-white">
+    <h3>Ingresos</h3>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Monto</th>
+            </tr>
+            </thead>
+        <tbody>
+            <tr t-foreach="state.ingresos"
+                t-as="ing"
+                t-key="ing.account_id[0]">
+                
+                <td><t t-esc="ing.codigo"/></td>
+                <td><t t-esc="ing.nombre"/></td>
+                <td class="text-success">
+                    $<t t-esc="ing.credit"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+    <button class="btn btn-info me-2" t-on-click="ToggleGastos">
+        <t t-if="!state.mostrarGastos">Ver Gastos</t>
+        <t t-if="state.mostrarGastos">Ocultar Gastos</t>
+    </button>
+
+    <div t-if="state.mostrarGastos" class="mt-3 p-3 border bg-white">
+    <h3>Gastos</h3>
+
+        <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Monto</th>
+            </tr>
+            </thead>
+        <tbody>
+            <tr t-foreach="state.egresos"
+                t-as="egr"
+                t-key="egr.account_id[0]">
+                
+                <td><t t-esc="egr.codigo"/></td>
+                <td><t t-esc="egr.nombre"/></td>
+                <td class="text-success">
+                    $<t t-esc="egr.credit"/>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+</div>
+    </t>
+
+</templates>

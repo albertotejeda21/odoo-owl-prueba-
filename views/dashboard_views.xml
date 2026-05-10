@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_dashboard_financiero" model="ir.actions.client">
+            <field name="name">Dashboard Financiero</field>
+            <field name="tag">ingresos_egresos_add.Dashboard</field>
+
+
+        </record>
+
+        <menuitem name="Finanzas OWL"
+            id="menu_dashboard_raiz"
+            sequence="10"/>
+
+        <menuitem id="menu_ingresos_dashboard"
+            name="Ver Dashboard"
+            parent="menu_dashboard_raiz" 
+            action="action_dashboard_financiero"
+            sequence="10"/>
+    </data>
+</odoo>
