@@ -11,4 +11,6 @@ Módulo que muestra un resumen de ingresos y gastos usando OWL.
 2. Actualizar lista de módulos
 3. Instalar "Dashboard Financiero"
 
-<img width="1528" height="811" alt="image" src="https://github.com/user-attachments/assets/1de30064-8bc7-4de7-83a1-7f437d8caefb" />
+<img width="1851" height="893" alt="image" src="https://github.com/user-attachments/assets/aee60224-884e-4f17-a174-fa7330136522" />
+
+<img width="1820" height="872" alt="image" src="https://github.com/user-attachments/assets/f3d05b59-254c-4202-915b-5385c6802436" />
