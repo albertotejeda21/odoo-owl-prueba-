@@ -1,5 +1,5 @@
 # odoo-owl-prueba-
-Módulo que muestra un resumen de ingresos y gastos usando OWL.
+Módulo que muestra un resumen de ingresos y gastos usando paginacion y OWL.
 
 ## Funcionalidades
 - Saldos totales al abrir
