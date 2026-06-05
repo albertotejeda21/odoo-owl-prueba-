@@ -5,16 +5,17 @@ import math
 class TradeController(http.Controller):
     
 #HACER QUR FUNCIONEN LAS 2
-
-
+ 
     @http.route('/trade/expediente/<int:id>', auth='public', type='http')
     def get_expediente_id(self, id, **kwargs):
         return str(id)
-
-    @http.route('/dashboard/ingresos', auth='public', type='json', methods=['GET'], csrf=False)
+    
+    @http.route('/dashboard/ingresos', auth='public', type='json', methods=['POST'], csrf=False)
     def get_ingresos_data(self, page=1, limit=50, **kwargs):
-        
         try:
+            page = int(page)
+            limit = int(limit)
+            
             domain = [
                 ("account_id.account_type", "in", ["income", "income_other"]),
                 ("move_id.state", "=", "posted")
@@ -25,18 +26,30 @@ class TradeController(http.Controller):
             registros = request.env['account.move.line'].sudo().search_read(
                 domain=domain,
                 fields=["account_id", "credit", "debit"],
-                limit=int (limit),
+                limit=limit,
                 offset=(page - 1) * limit
             )
             
-            total_pages = math.ceil(total / limit) if limit > 0 else 1
+            account_ids = [r['account_id'][0] for r in registros if r.get('account_id')]
+            cuentas = request.env['account.account'].sudo().search_read(
+                [['id', 'in', account_ids]],
+                ['id', 'code', 'name']
+            )
             
-            return {    
+            cuentas_dict = {c['id']: c for c in cuentas}
+            
+            for reg in registros:
+                if reg.get('account_id'):
+                    cuenta = cuentas_dict.get(reg['account_id'][0], {})
+                    reg['codigo'] = cuenta.get('code', '')
+                    reg['nombre'] = cuenta.get('name', '')
+            
+            return {
                 'success': True,
                 'data': registros,
                 'total': total,
-                'page':int  (page),
-                'pages': total_pages
+                'page': page,
+                'pages': math.ceil(total / limit) if limit > 0 else 1
             }
 
         except Exception as e:
@@ -45,30 +58,40 @@ class TradeController(http.Controller):
                 'error': str(e)
             }
 
-
-
-#otro
-
-    @http.route('/dashboard/egresos', auth='public', type='json', methods=['GET'], csrf=False)
+    @http.route('/dashboard/egresos', auth='public', type='json', methods=['POST'], csrf=False)
     def get_egresos_data(self, page=1, limit=50, **kwargs):
-        
+            
+        page = int(page)
+        limit = int(limit)
         try:
             domain = [
-                #("account_id.account_type", "in", ["income", "income_other"]),
-                ("account_id.account_type", "in", ["expense", "expense_depreciation","expense_direct_cost"]), 
+                ("account_id.account_type", "in", ["expense", "expense_depreciation", "expense_direct_cost"]), 
                 ("move_id.state", "=", "posted")
             ]
             
             total = request.env['account.move.line'].sudo().search_count(domain)
-            page = int(page)
-            limit = int(limit)
+
             
             registros = request.env['account.move.line'].sudo().search_read(
                 domain=domain,
                 fields=["account_id", "credit", "debit"],
-                limit=int (limit),
+                limit=limit,
                 offset=(page - 1) * limit
             )
+
+            account_ids = [r['account_id'][0] for r in registros if r.get('account_id')]
+            cuentas = request.env['account.account'].sudo().search_read(
+                [['id', 'in', account_ids]],
+                ['id', 'code', 'name']
+            )
+
+            cuentas_dict = {c['id']: c for c in cuentas}
+            
+            for reg in registros:
+                if reg.get('account_id'):
+                    cuenta = cuentas_dict.get(reg['account_id'][0], {})
+                    reg['codigo'] = cuenta.get('code', '')
+                    reg['nombre'] = cuenta.get('name', '')
             
             total_pages = math.ceil(total / limit) if limit > 0 else 1
             
@@ -76,7 +99,7 @@ class TradeController(http.Controller):
                 'success': True,
                 'data': registros,
                 'total': total,
-                'page':int  (page),
+                'page': page,
                 'pages': total_pages
             }
 
@@ -85,6 +108,3 @@ class TradeController(http.Controller):
                 'success': False,
                 'error': str(e)
             }
-
-
-            

@@ -7,7 +7,7 @@
     ],
     'assets': {
         'web.assets_backend': [
-            'ingresos_egresos_add/static/src/js/dashboard.js',
+            'ingresos_egresos_add/static/src/js/dashboard_api.js',
             'ingresos_egresos_add/static/src/xml/dashboard.xml',
         ],
     },

@@ -3,7 +3,7 @@
     <data>
         <record id="action_dashboard_financiero" model="ir.actions.client">
             <field name="name">Dashboard Financiero</field>
-            <field name="tag">ingresos_egresos_add.Dashboard</field>
+            <field name="tag">ingresos_egresos_add.Dashboard_api</field>
 
 
         </record>

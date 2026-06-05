@@ -6,7 +6,7 @@ import { onWillStart } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 
 class Dashboard extends Component {
-    static template = "ingresos_egresos_add.Dashboard";
+    static template = "ingresos_egresos_add.Dashboard_api";
 
 setup(){
 
